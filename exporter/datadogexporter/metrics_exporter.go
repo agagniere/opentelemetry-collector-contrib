@@ -17,7 +17,6 @@ import (
 	"github.com/DataDog/datadog-agent/pkg/opentelemetry-mapping-go/otlp/attributes"
 	"github.com/DataDog/datadog-agent/pkg/opentelemetry-mapping-go/otlp/attributes/source"
 	otlpmetrics "github.com/DataDog/datadog-agent/pkg/opentelemetry-mapping-go/otlp/metrics"
-	"github.com/DataDog/datadog-agent/pkg/trace/config"
 	"github.com/DataDog/datadog-api-client-go/v2/api/datadogV2"
 	"go.opentelemetry.io/collector/exporter"
 	"go.opentelemetry.io/collector/pdata/pcommon"
@@ -36,7 +35,6 @@ import (
 type metricsExporter struct {
 	params           exporter.Settings
 	cfg              *datadogconfig.Config
-	agntConfig       *config.AgentConfig
 	ctx              context.Context
 	metricsAPI       *datadogV2.MetricsApi
 	tr               *otlpmetrics.Translator
@@ -56,7 +54,6 @@ func newMetricsExporter(
 	ctx context.Context,
 	params exporter.Settings,
 	cfg *datadogconfig.Config,
-	agntConfig *config.AgentConfig,
 	onceMetadata *sync.Once,
 	attrsTranslator *attributes.Translator,
 	sourceProvider source.Provider,
@@ -89,7 +86,6 @@ func newMetricsExporter(
 		params:           params,
 		cfg:              cfg,
 		ctx:              ctx,
-		agntConfig:       agntConfig,
 		tr:               tr,
 		scrubber:         scrubber,
 		retrier:          clientutil.NewRetrier(params.Logger, cfg.BackOffConfig, scrubber),

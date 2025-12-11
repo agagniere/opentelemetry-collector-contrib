@@ -368,7 +368,7 @@ func (f *factory) createMetricsExporter(
 		}
 		return sf.CreateMetrics(ctx, set, ex)
 	default:
-		exp, metricsErr := newMetricsExporter(ctx, set, cfg, acfg, &f.onceMetadata, attrsTranslator, hostProvider, metadataReporter, statsIn, f.gatewayUsage)
+		exp, metricsErr := newMetricsExporter(ctx, set, cfg, &f.onceMetadata, attrsTranslator, hostProvider, metadataReporter, statsIn, f.gatewayUsage)
 		if metricsErr != nil {
 			cancel()  // first cancel context
 			wg.Wait() // then wait for shutdown
